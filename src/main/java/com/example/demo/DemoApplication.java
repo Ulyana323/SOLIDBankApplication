@@ -1,15 +1,21 @@
 package com.example.demo;
 
+import com.example.demo.controller.AccountBasicCLI;
+import com.example.demo.controller.MYCLI;
+import com.example.demo.controller.TransactionDepositCLI;
+import com.example.demo.controller.TransactionWithdrawCLI;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Scanner;
 
-public class DemoApplication {
+@SpringBootApplication(scanBasePackages = "com.example.demo")
+public class DemoApplication implements CommandLineRunner {
 
+    @Autowired
+    private ApplicationContext context;
 	private static final String help =
 			"""
                     Welcome to CLI bank service
@@ -23,30 +29,49 @@ public class DemoApplication {
                     7 - exit""";
 
 	public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class);}
 
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
-		MYCLI myCLI = context.getBean("mycli", MYCLI.class);
-		Scanner scanner = myCLI.getScanner();
-		String clientId = myCLI.requestClientAmountNumber();
-		System.out.println(help);
-		AccountDAO memoryAccountDAO = context.getBean("memoryAccountDAO", MemoryAccountDAO.class);
-		AccountCreationService accountCreationService =
-				context.getBean("accountCreationServiceimpl", AccountCreationServiceImpl.class);
-		BankCore bankCore = context.getBean("bankCore", BankCore.class);
-		AccountListingService accountListingService =
-				context.getBean("accountListingServiceImpl", AccountsListingServiseImpl.class);
-		AccountBasicCLI accountBasicCLI = context.getBean("accountBasicCLI", AccountBasicCLI.class);
+    @Override
+    public void run(String... args) throws Exception {
+        boolean running = true;
+        String clientID = "1";
 
-		while (scanner.hasNext()) {
-			switch (scanner.next()) {
-				case "1" -> accountBasicCLI.getAcccounts(clientId);
-				case "2" -> accountBasicCLI.createAccountRequest(clientId);
-				case "6" -> System.out.println(help);
-				case "7" -> System.exit(0);
-				default -> System.out.println("Wrong operation number");
-			}
-		}
-		context.close();
-	}
+        MYCLI myCLI = context.getBean(MYCLI.class);
+        AccountBasicCLI accountBasicCLI = context.getBean(AccountBasicCLI.class);
+        TransactionDepositCLI transactionDepositCLI = context.getBean(TransactionDepositCLI.class);
+        TransactionWithdrawCLI transactionWithdrawCLI = context.getBean(TransactionWithdrawCLI.class);
 
+        String helpMessage = "1 - show accounts\n2 - create account\n3 - deposit\n4 - withdraw\n5 - transfer\n6 - this message\n7 - exit\n";
+        System.out.printf("Welcome to CLI bank service\n");
+        System.out.printf("Enter operation number: \n");
+        System.out.printf(helpMessage);
+        while(running){
+            switch(myCLI.getScanner().nextLine()){
+                case "1":
+                    accountBasicCLI.getAcccounts(clientID);
+                    break;
+                case "2":
+                    accountBasicCLI.createAccountRequest(clientID);
+                    break;
+                case "3":
+                   transactionDepositCLI.depositMoney(clientID);
+                    break;
+                case "4":
+                    transactionWithdrawCLI.withdrawMoney(clientID);
+                    break;
+                case "6":
+                    System.out.printf(helpMessage);
+                    break;
+                case "7":
+                    System.out.printf("Application Closed\n");
+                    running = false;
+                    break;
+                default:
+                    System.out.printf("Command not recognized!\n");
+                    break;
+            }
+        }
+        myCLI.getScanner().close();
+
+    }
 }

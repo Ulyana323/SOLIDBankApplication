@@ -1,10 +1,12 @@
 package com.example.demo;
 
+import com.example.demo.services.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+/*
 @Configuration
 public class MyConfig {
+
 
     @Bean
     MYCLI mycli()
@@ -39,4 +41,4 @@ public class MyConfig {
     }
 
 }
-
+*/

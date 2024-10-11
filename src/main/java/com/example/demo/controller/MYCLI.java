@@ -1,7 +1,12 @@
-package com.example.demo;
+package com.example.demo.controller;
+
+import com.example.demo.entity.AccountType;
+import com.example.demo.repository.CLIUI;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class MYCLI implements CLIUI {
    private final Scanner scanner;
 
@@ -24,10 +29,10 @@ public class MYCLI implements CLIUI {
         System.out.print("enter balance: ");
         return scanner.nextDouble();
     }
-    public String requestClientAmountNumber()//clientid
+    public long requestClientAccountNumber()//account_id
     {
-        System.out.print("enter id: ");
-        return scanner.next();
+        System.out.print("enter account id: ");
+        return scanner.nextLong();
     }
     public AccountType requestAccountType()
     {
@@ -38,7 +43,7 @@ public class MYCLI implements CLIUI {
             case "CHECKING" -> {
                 return AccountType.Checking;
             }
-            case "Saving" -> {
+                case "SAVING" -> {
                 return AccountType.Saving;
             }
             case "FIXED" -> {
