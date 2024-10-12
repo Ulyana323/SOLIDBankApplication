@@ -7,4 +7,6 @@ public class Transaction {
 
     double summa;
     long account_id;
+
+
 }

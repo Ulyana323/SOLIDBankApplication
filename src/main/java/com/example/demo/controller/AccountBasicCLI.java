@@ -4,13 +4,17 @@ import com.example.demo.entity.AccountType;
 import com.example.demo.repository.AccountListingService;
 import com.example.demo.repository.CreateAccountOperationUI;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class AccountBasicCLI {
+    @Autowired
     CreateAccountOperationUI createAccountOperationUI;
+    @Autowired
     BankCore bankCore;
+    @Autowired
     AccountListingService accountListingService;
 
 

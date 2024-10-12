@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Account {
 
     private AccountType accountType;
@@ -16,7 +17,7 @@ public class Account {
     private double balance;
     private boolean withdrawAllowed;
 
-
+    @Override
     public String toString() {
         return "clientid: "+this.CLientID+" accountid: "+this.getId()+" Account Type: "+this.getAccountType()+" Balance: "+this.getBalance();
     }

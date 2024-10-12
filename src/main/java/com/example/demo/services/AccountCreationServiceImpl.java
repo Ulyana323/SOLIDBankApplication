@@ -16,9 +16,9 @@ public class AccountCreationServiceImpl implements AccountCreationService {
     public void create(AccountType accountType, long BankID, String clientID, long accountID) {
 
         if (accountType != AccountType.Fixed) {
-            accountDAO.createNewAccount(new Account(accountType, accountID, clientID, 0, false));
+            accountDAO.createNewAccount(new Account(accountType, accountID, clientID, 0, true));
         } else {
-            accountDAO.createNewAccount(new Account(accountType,accountID, clientID, 0, true));
+            accountDAO.createNewAccount(new Account(accountType,accountID, clientID, 0, false));
         }
     }
 }

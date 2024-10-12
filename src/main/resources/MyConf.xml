@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <beans xmlns="http://www.springframework.org/schema/beans"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-        <bean id="service" class="com.example.demo.Service">
-            <constructor-arg type="String" value="Hello World"/>
-        </bean>
 
-        <bean id="client" class="com.example.demo.Client">
-            <constructor-arg ref="service"/>
-        </bean>
 
     </beans>
